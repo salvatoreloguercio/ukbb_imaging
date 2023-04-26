@@ -96,14 +96,14 @@ for eid in file_list_zip_unique[0:1]:
         dset.convert_dicom_to_nifti(nifti_dir)
 
         # Remove intermediate files
-        if os.path.exists(dicom_tem):
-            shutil.rmtree(dicom_tem)
+#        if os.path.exists(dicom_tem):
+#            shutil.rmtree(dicom_tem)
 
         print(eid)
         
     except:
         list_error.append(eid)
-        if os.path.exists(dicom_tem):
-            shutil.rmtree(dicom_tem)
+#        if os.path.exists(dicom_tem):
+#            shutil.rmtree(dicom_tem)
 
     list_error
