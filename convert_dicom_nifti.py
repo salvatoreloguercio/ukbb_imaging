@@ -39,7 +39,11 @@ for eid in file_list_zip_unique[0:1]:
 
 
             foldnum=f.split("/")[9]
-            nifti_dir = os.path.join(data_root,"nifti",foldnum,str(eid))   #str(eid))
+            foldnum_dir = os.path.join(data_root,"nifti",foldnum)
+            if not os.path.exists(foldnum_dir):
+                os.mkdir(foldnum_dir)
+            
+            nifti_dir = os.path.join(foldnum_dir,str(eid)) 
             dicom_tem = os.path.join(data_root, 'dicom')
             if not os.path.exists(nifti_dir):
                 os.mkdir(nifti_dir)
