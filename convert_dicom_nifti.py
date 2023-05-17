@@ -5,11 +5,25 @@ from ukbb_cardiac.data.biobank_utils import *
 import dateutil.parser
 import zipfile
 import shutil
+import warnings
+
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 # read paths of dicom files (zip only)
 
 file_list = pd.read_csv("dicom_list_baseline.txt",header=None)
+file_list['id'] = [file.split("/")[-1].split("_")[0] for file in file_list[0]]
+
+
+
+
+
+
+
 file_list_0 = file_list[0].tolist()
+# Remove CINE
+file_list_0 = [item for item in file_list_0 if 'CINE' not in item]
+
 file_list_zip = [file.split("/")[-1].split("_")[0] for file in file_list_0]
 file_list_zip_unique = list(sorted((set(file_list_zip))))
 print(len(file_list_zip_unique))
@@ -19,17 +33,20 @@ cnt_check = pd.DataFrame(file_list_zip, columns = ['id'])
 # cnt_check['id2'] = cnt_check['id']
 # cnt_check['cnt'] = cnt_check.groupby(by = ['id2']).count()
 cnt_check_group = pd.DataFrame(cnt_check.value_counts(), columns = ['cnt'])
-print(len(cnt_check_group[cnt_check_group['cnt'] == 4]))
+#print(len(cnt_check_group[cnt_check_group['cnt'] == 4]))
 print(len(cnt_check_group[cnt_check_group['cnt'] == 3]))
 print(len(cnt_check_group[cnt_check_group['cnt'] == 2]))
 print(len(cnt_check_group[cnt_check_group['cnt'] == 1]))
+
+# only ids with counts 3 or 4 above
+file_list_full = list(cnt_check_group[cnt_check_group['cnt'] >= 3 ].reset_index(drop = False).id)
 
 data_root = "/mnt/stsi/stsi3/Internal/ukbb_cardiac"
 
 # convert dicom file to nifti file
 
 list_error = []
-for eid in file_list_zip_unique:
+for eid in file_list_full[0:9]:
     try:
         # Unpack the data
         
