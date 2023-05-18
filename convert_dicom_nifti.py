@@ -1,3 +1,4 @@
+import sys
 import os
 import glob
 import pandas as pd
@@ -13,11 +14,6 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 file_list = pd.read_csv("dicom_list_baseline.txt",header=None)
 file_list['id'] = [file.split("/")[-1].split("_")[0] for file in file_list[0]]
-
-
-
-
-
 
 
 file_list_0 = file_list[0].tolist()
@@ -46,7 +42,8 @@ data_root = "/mnt/stsi/stsi3/Internal/ukbb_cardiac"
 # convert dicom file to nifti file
 
 list_error = []
-for eid in file_list_full[0:9]:
+for eid in file_list_full[int(sys.argv[1]):int(sys.argv[2])]:
+    print(eid)
     try:
         # Unpack the data
         

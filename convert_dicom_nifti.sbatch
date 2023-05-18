@@ -2,9 +2,9 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu
-#SBATCH --time=3:00:00
-#SBATCH -J dicom2nifti
-#SBATCH -o dicom2nifti.%J
+#SBATCH --time=240:00:00
+##SBATCH -J dicom2nifti
+##SBATCH -o dicom2nifti.%J
 
 export PYTHONUNBUFFERED=TRUE
 
@@ -12,6 +12,6 @@ export PYTHONUNBUFFERED=TRUE
 module load tensorflow
 module load opencv
 
-cd /gpfs/group/torkamani/loguerci/ukbb_cardiac
+cd $SLURM_SUBMIT_DIR
 
-python convert_dicom_nifti.py
+python convert_dicom_nifti.py $start $stop
