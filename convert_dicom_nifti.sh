@@ -11,5 +11,5 @@ while read batch; do
   sbatch --export=start=$start,stop=$stop --job-name=convert_d_n_$batch --output=convert_d_n_$batch.%J convert_dicom_nifti.sbatch;
   sleep 1;
 
-done < batches.txt
+done < batches0.txt
 
