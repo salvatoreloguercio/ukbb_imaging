@@ -58,7 +58,8 @@ for eid in file_list_full[int(sys.argv[1]):int(sys.argv[2])]:
                 os.mkdir(foldnum_dir)
             
             nifti_dir = os.path.join(foldnum_dir,str(eid)) 
-            dicom_tem = os.path.join(data_root, 'dicom')
+            dicom_tem_name = 'dicom' + str(eid)
+            dicom_tem = os.path.join(data_root, dicom_tem_name)
             if not os.path.exists(nifti_dir):
                 os.mkdir(nifti_dir)
             if not os.path.exists(dicom_tem):
@@ -115,7 +116,7 @@ for eid in file_list_full[int(sys.argv[1]):int(sys.argv[2])]:
 
         # Remove intermediate files
         if os.path.exists(dicom_tem):
-            shutil.rmtree(dicom_tem)
+            shutil.rmtree(dicom_tem) # ,ignore_errors=True
 
         print(eid)
         
