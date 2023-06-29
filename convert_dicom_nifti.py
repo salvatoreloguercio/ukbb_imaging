@@ -42,8 +42,10 @@ data_root = "/mnt/stsi/stsi3/Internal/ukbb_cardiac"
 # convert dicom file to nifti file
 
 list_error = []
+n = 0
 for eid in file_list_full[int(sys.argv[1]):int(sys.argv[2])]:
-    print(eid)
+    n += 1
+    print(n,eid,sep="\t")
     try:
         # Unpack the data
         
