@@ -22,17 +22,24 @@ file_list_0 = [item for item in file_list_0 if 'CINE' not in item]
 
 file_list_zip = [file.split("/")[-1].split("_")[0] for file in file_list_0]
 file_list_zip_unique = list(sorted((set(file_list_zip))))
-print(len(file_list_zip_unique))
+print("Number of input IDs:")
 print(len(file_list_zip))
+print("Unique input IDs:")
+print(len(file_list_zip_unique))
 
 cnt_check = pd.DataFrame(file_list_zip, columns = ['id'])
 # cnt_check['id2'] = cnt_check['id']
 # cnt_check['cnt'] = cnt_check.groupby(by = ['id2']).count()
 cnt_check_group = pd.DataFrame(cnt_check.value_counts(), columns = ['cnt'])
 #print(len(cnt_check_group[cnt_check_group['cnt'] == 4]))
+print("Number of input IDs with at least 3 DICOM image types")
 print(len(cnt_check_group[cnt_check_group['cnt'] == 3]))
+print("Number of input IDs with at least 2 DICOM image types")
 print(len(cnt_check_group[cnt_check_group['cnt'] == 2]))
+print("Number of input IDs with at least 1 DICOM image type")
 print(len(cnt_check_group[cnt_check_group['cnt'] == 1]))
+print("------")
+print("counter","ID",sep="\t")
 
 # only ids with counts 3 or 4 above
 file_list_full = list(cnt_check_group[cnt_check_group['cnt'] >= 3 ].reset_index(drop = False).id)
